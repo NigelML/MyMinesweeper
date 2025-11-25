@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using System;
+
 public class MineGround : MonoBehaviour
 {
     [SerializeField] private Image statusImage;
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private List<MineGround> sisterCellsList = new List<MineGround>();
-
+    
     private Image cellImage;
     private Button button;
 
@@ -40,6 +40,7 @@ public class MineGround : MonoBehaviour
     // Método principal chamado pelo clique
     public void ActiveCell()
     {
+        if (GameManager.Instance.PauseGame) return;
         // 1. Condição de Parada (Base Case)
         // Se já foi checada ou marcada com bandeira, não faz nada
         if (cellChecked || isFlagged) return;
@@ -53,10 +54,11 @@ public class MineGround : MonoBehaviour
         {
             MyEventSystem.RaiseTryGameOver();
             Debug.Log("BOOM!");
+            return;
         }
         else
-        {
-            // 3. Primeiro contamos as minas ao redor (SEM RECURSÃO AQUI)
+        {     
+            MyEventSystem.RaiseCellChecked();
             int minesAround = CountMinesAround();
 
             if (minesAround > 0)
@@ -77,7 +79,7 @@ public class MineGround : MonoBehaviour
         }
     }
 
-    // Método auxiliar APENAS para contar (Matemática pura, sem recursão)
+    // Método auxiliar APENAS para contar minas ao redor
     private int CountMinesAround()
     {
         int count = 0;

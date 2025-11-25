@@ -11,20 +11,24 @@ public class MineGroundCollection : MonoBehaviour
 
     [Header("Dificuldade (0.1 = 10%, 0.2 = 20%)")]
     [Range(0.1f, 0.25f)] // Limita o slider no Inspector para não quebrar o jogo
-    [SerializeField] private float difficultyRatio = 0.15f;
+    private float difficultyRatio = 0.15f;
     private int mineCount;
+    private int safeMineCount;
 
     private MineGround[,] matrixMineGrounds;
     void OnEnable()
     {
         MyEventSystem.OnGameOver += OnGameOver;
+        MyEventSystem.OnCellChecked += SafeMineChecked;
     }
     void OnDisable()
     {
         MyEventSystem.OnGameOver -= OnGameOver;
+        MyEventSystem.OnCellChecked -= SafeMineChecked;
     }
     void Start()
     {
+        difficultyRatio = GameManager.Instance.DificultyLevel;
         SetGrid();
         CalculateMineCount();
         SetSisterCells();
@@ -96,7 +100,7 @@ public class MineGroundCollection : MonoBehaviour
             matrixMineGrounds[r, c].HaveMine = true;
             mineCells.Add(matrixMineGrounds[r, c]);
         }
-
+        safeMineCount = totalCells - mineCount;
     }
     private void CalculateMineCount()
     {
@@ -134,6 +138,15 @@ public class MineGroundCollection : MonoBehaviour
         foreach (MineGround mineCell in mineCells)
         {
             mineCell.RevealMine();
+        }
+    }
+
+    public void SafeMineChecked()
+    {
+        safeMineCount--;
+        if (safeMineCount <= 0)
+        {
+            MyEventSystem.RaiseTryGameWin();
         }
     }
 }
