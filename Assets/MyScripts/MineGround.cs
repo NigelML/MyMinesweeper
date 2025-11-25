@@ -13,10 +13,10 @@ public class MineGround : MonoBehaviour
     private Button button;
 
     private bool haveMine;
-    public bool HaveMine {  get { return haveMine; } set { haveMine = value; } }
+    public bool HaveMine { get { return haveMine; } set { haveMine = value; } }
 
     private bool cellChecked;
-    public bool CellChecked => cellChecked;    
+    public bool CellChecked => cellChecked;
 
     private bool isFlagged;
     public bool IsFlagged => isFlagged;
@@ -51,7 +51,7 @@ public class MineGround : MonoBehaviour
 
         if (haveMine)
         {
-            // Game Over logic here
+            MyEventSystem.RaiseTryGameOver();
             Debug.Log("BOOM!");
         }
         else
@@ -70,7 +70,7 @@ public class MineGround : MonoBehaviour
                 // 4. FLOOD FILL (Recursão)
                 // Só entramos aqui se NÃO houver minas ao redor (buraco vazio)
                 foreach (MineGround sister in sisterCellsList)
-                {                    
+                {
                     sister.ActiveCell();
                 }
             }
@@ -89,6 +89,15 @@ public class MineGround : MonoBehaviour
             }
         }
         return count;
+    }
+
+    public void RevealMine()
+    {
+        if (haveMine)
+        {
+            statusImage.sprite = Resources.Load<Sprite>("mine");
+            statusImage.gameObject.SetActive(true);
+        }
     }
 
 }

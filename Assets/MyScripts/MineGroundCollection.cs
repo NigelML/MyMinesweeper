@@ -15,7 +15,14 @@ public class MineGroundCollection : MonoBehaviour
     private int mineCount;
 
     private MineGround[,] matrixMineGrounds;
-
+    void OnEnable()
+    {
+        MyEventSystem.OnGameOver += OnGameOver;
+    }
+    void OnDisable()
+    {
+        MyEventSystem.OnGameOver -= OnGameOver;
+    }
     void Start()
     {
         SetGrid();
@@ -44,7 +51,7 @@ public class MineGroundCollection : MonoBehaviour
 
                 // 4. Salva na sua matriz lógica [,]
                 matrixMineGrounds[i, j] = cellScript;
-             
+
             }
         }
     }
@@ -119,6 +126,14 @@ public class MineGroundCollection : MonoBehaviour
         foreach (Transform child in gridParent.transform)
         {
             Destroy(child.gameObject);
+        }
+    }
+    private void OnGameOver()
+    {
+        // Revela todas as minas
+        foreach (MineGround mineCell in mineCells)
+        {
+            mineCell.RevealMine();
         }
     }
 }
