@@ -4,10 +4,9 @@ using UnityEngine.UI;
 public class DifucultSelected : MonoBehaviour
 {
     [Range(0.1f, 0.25f)]
-    [SerializeField]private float dificultyLevel = 0.15f;
-    [SerializeField] private GameObject PanelToClose;
-    [SerializeField] private GameObject MineGround;
-    
+    [SerializeField] private float dificultyLevel = 0.15f;
+
+
     private Button button;
 
     void Start()
@@ -18,15 +17,7 @@ public class DifucultSelected : MonoBehaviour
     public void SetDificulty()
     {
         GameManager.Instance.SetDificultyLevel(dificultyLevel);
-        ClosePanel();
-        ActiveMineGround();
+        GameManager.Instance.StartGame();
     }
-    public void ClosePanel()
-    {
-        PanelToClose.SetActive(false);
-    }
-    public void ActiveMineGround()
-    {
-        MineGround.gameObject.SetActive(true);
-    }
+
 }

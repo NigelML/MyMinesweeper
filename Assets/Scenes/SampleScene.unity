@@ -148,6 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed6cfcd4caa9a540b96e0b3d16bf45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WinPanel: {fileID: 752425678}
+  GameOverPanel: {fileID: 2065056621}
+  StartPanel: {fileID: 1626375485}
+  MineField: {fileID: 651477421}
 --- !u!4 &35342707
 Transform:
   m_ObjectHideFlags: 0
@@ -446,8 +450,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dificultyLevel: 0.15
-  PanelToClose: {fileID: 1626375485}
-  MineGround: {fileID: 651477421}
 --- !u!1 &176565208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,8 +1545,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dificultyLevel: 0.25
-  PanelToClose: {fileID: 1626375485}
-  MineGround: {fileID: 651477421}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,7 +2217,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 971617242}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 35342706}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &971617242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4958,7 +4970,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1809157722}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 35342706}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1809157722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5144,8 +5168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dificultyLevel: 0.1
-  PanelToClose: {fileID: 1626375485}
-  MineGround: {fileID: 651477421}
 --- !u!1 &2065056621
 GameObject:
   m_ObjectHideFlags: 0
