@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
-public class MineGround : MonoBehaviour
+public class MineGround : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Image statusImage;
     [SerializeField] private TextMeshProUGUI amountText;
@@ -34,7 +35,7 @@ public class MineGround : MonoBehaviour
     {
         cellImage = GetComponent<Image>();
         button = GetComponent<Button>();
-        button.onClick.AddListener(ActiveCell);
+        //button.onClick.AddListener(ActiveCell);
     }
 
     // Método principal chamado pelo clique
@@ -99,6 +100,42 @@ public class MineGround : MonoBehaviour
         {
             statusImage.sprite = Resources.Load<Sprite>("mine");
             statusImage.gameObject.SetActive(true);
+        }
+    }
+
+    public void ToggleFlag()
+    {
+        if (GameManager.Instance.PauseGame) return;
+        if (cellChecked) return;
+
+        int f;
+        isFlagged = !isFlagged;
+        if (isFlagged)
+        {
+            statusImage.sprite = Resources.Load<Sprite>("Flag_A");
+            statusImage.gameObject.SetActive(true); 
+            f = -1;          
+        }
+        else
+        {
+            statusImage.gameObject.SetActive(false); 
+            f = 1;          
+        }
+        GameManager.Instance.FlagsAvailable += f;
+        MyEventSystem.RaiseSetFlags();
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {       
+        Debug.Log("Clicou em: " + gameObject.name);
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {            
+            if (IsFlagged) return; 
+
+            ActiveCell(); 
+        }       
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            ToggleFlag();
         }
     }
 

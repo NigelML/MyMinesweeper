@@ -11,11 +11,13 @@ public class GameTimer : MonoBehaviour
 
     void OnEnable()
     {
-        MyEventSystem.OnStartGame += StartTimer;              
+        MyEventSystem.OnStartGame += StartTimer;  
+        MyEventSystem.onPauseGame += OnPauseGame;            
     }
     void OnDisable()
     {
         MyEventSystem.OnStartGame -= StartTimer;
+        MyEventSystem.onPauseGame -= OnPauseGame;
     }
     private void Update()
     {
@@ -53,6 +55,11 @@ public class GameTimer : MonoBehaviour
         // Formatação de string:
         // {0:00} significa "primeiro numero com pelo menos 2 digitos"
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    private void OnPauseGame()
+    {
+        _isRunning = !_isRunning;
     }
 
 }

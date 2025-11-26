@@ -7,11 +7,14 @@ public class GameManager : MonoBehaviour
     public bool PauseGame => pauseGame;
     private float dificultyLevel;
     public float DificultyLevel => dificultyLevel;
+    private int flagsAvailable;
+    public int FlagsAvailable { get { return flagsAvailable; } set { flagsAvailable = value; } }
 
     [SerializeField] private GameObject WinPanel;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private GameObject StartPanel;
     [SerializeField] private GameObject MineField;
+    [SerializeField] private GameObject infoPanel;
 
     void Awake()
     {
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPauseGame()
     {
+        MyEventSystem.RaisePauseGame();
         pauseGame = !pauseGame;
     }
 
@@ -67,6 +71,7 @@ public class GameManager : MonoBehaviour
     {
         StartPanel.SetActive(false);
         MineField.SetActive(true);
+        infoPanel.SetActive(true);
         pauseGame = false;
     }
     public void RestartGame()

@@ -114,7 +114,8 @@ public class MineGroundCollection : MonoBehaviour
 
         // Segurança máxima: Deixa pelo menos 1 buraco vazio (para o primeiro clique)
         if (mineCount >= totalCells) mineCount = totalCells - 1;
-
+        
+        GameManager.Instance.FlagsAvailable = mineCount;
 
     }
     public MineGround GetMineGroundAt(int r, int c)
