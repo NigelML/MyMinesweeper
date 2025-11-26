@@ -17,7 +17,7 @@ public class DifucultSelected : MonoBehaviour
     public void SetDificulty()
     {
         GameManager.Instance.SetDificultyLevel(dificultyLevel);
-        GameManager.Instance.StartGame();
+        MyEventSystem.RaiseStartGame();
     }
 
 }

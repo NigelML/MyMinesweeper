@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         MyEventSystem.OnGameWin += OnGameWin;
         MyEventSystem.OnGameOver += OnGameOver;    
+        MyEventSystem.OnStartGame += OnStartGame;
         pauseGame = false;    
     }
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     {
         MyEventSystem.OnGameWin -= OnGameWin;
         MyEventSystem.OnGameOver -= OnGameOver;
+        MyEventSystem.OnStartGame -= OnStartGame;
     }
 
     private void OnGameWin()
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         dificultyLevel = level;
     }
-    public void StartGame()
+    public void OnStartGame()
     {
         StartPanel.SetActive(false);
         MineField.SetActive(true);
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
+        MyEventSystem.ResetEvents();
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 }
