@@ -148,7 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed6cfcd4caa9a540b96e0b3d16bf45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MineField: {fileID: 651477421}
+  uiManager: {fileID: 819490103}
+  Grid_Tilemap: {fileID: 1424026863}
 --- !u!4 &35342707
 Transform:
   m_ObjectHideFlags: 0
@@ -2267,6 +2268,7 @@ MonoBehaviour:
   cellPrefab: {fileID: 3922950749565746612, guid: 6ed0ea0c5158832479078096f995a523, type: 3}
   rows: 6
   columns: 13
+  difficultyRatio: 0.15
 --- !u!1 &752425678
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,7 +2362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &819490103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2377,6 +2379,7 @@ MonoBehaviour:
   infoPanel: {fileID: 573292481}
   WinPanel: {fileID: 752425678}
   GameOverPanel: {fileID: 2065056621}
+  MineField: {fileID: 651477421}
 --- !u!4 &819490104
 Transform:
   m_ObjectHideFlags: 0
@@ -2541,7 +2544,7 @@ GameObject:
   - component: {fileID: 971617242}
   - component: {fileID: 971617241}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Restart-Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5127,7 +5130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1424026864
 Grid:
   m_ObjectHideFlags: 0
@@ -5174,7 +5177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1626375486
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5521,7 +5524,7 @@ GameObject:
   - component: {fileID: 1809157722}
   - component: {fileID: 1809157721}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Restart-Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

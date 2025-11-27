@@ -5,13 +5,14 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject StartPanel;
     [SerializeField] private GameObject infoPanel;
-    [SerializeField] private GameObject WinPanel;    
-    [SerializeField] private GameObject GameOverPanel;    
+    [SerializeField] private GameObject WinPanel;
+    [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private GameObject MineField;
 
 
     void OnEnable()
     {
+        DisablePanels();
         MyEventSystem.OnGameWin += OnGameWin;
         MyEventSystem.OnGameOver += OnGameOver;
         MyEventSystem.OnStartGame += OnStartGame;
@@ -23,6 +24,10 @@ public class UIManager : MonoBehaviour
         MyEventSystem.OnStartGame -= OnStartGame;
     }
 
+    void Start()
+    {
+        StartPanel.SetActive(true);
+    }
     private void OnGameWin()
     {
         OnPauseGame();
@@ -39,8 +44,17 @@ public class UIManager : MonoBehaviour
     }
     public void OnStartGame()
     {
-        StartPanel.SetActive(false);        
+        StartPanel.SetActive(false);
         infoPanel.SetActive(true);
         MineField.SetActive(true);
+    }
+    private void DisablePanels()
+    {
+        if (infoPanel.activeSelf)
+            infoPanel.SetActive(false);
+        if (WinPanel.activeSelf)
+            WinPanel.SetActive(false);
+        if (GameOverPanel.activeSelf)
+            GameOverPanel.SetActive(false);
     }
 }

@@ -34,8 +34,7 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         cellImage = GetComponent<Image>();
-        button = GetComponent<Button>();
-        //button.onClick.AddListener(ActiveCell);
+        button = GetComponent<Button>();      
     }
 
     // Método principal chamado pelo clique

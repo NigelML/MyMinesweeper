@@ -12,12 +12,12 @@ public class GameTimer : MonoBehaviour
     void OnEnable()
     {
         MyEventSystem.OnStartGame += StartTimer;  
-        MyEventSystem.onPauseGame += OnPauseGame;            
+        MyEventSystem.OnPauseGame += OnPauseGame;            
     }
     void OnDisable()
     {
         MyEventSystem.OnStartGame -= StartTimer;
-        MyEventSystem.onPauseGame -= OnPauseGame;
+        MyEventSystem.OnPauseGame -= OnPauseGame;
     }
     private void Update()
     {

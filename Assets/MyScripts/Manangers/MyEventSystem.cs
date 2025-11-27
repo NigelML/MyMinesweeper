@@ -6,7 +6,7 @@ public static class MyEventSystem
         public static Action OnCellChecked;
         public static Action OnStartGame;
         public static Action OnSetFlags;
-        public static Action onPauseGame;
+        public static Action OnPauseGame;
 
         public static void RaiseTryGameOver()
                 => OnGameOver?.Invoke();
@@ -19,7 +19,7 @@ public static class MyEventSystem
         public static void RaiseSetFlags()
             => OnSetFlags?.Invoke();
         public static void RaisePauseGame()
-        => onPauseGame?.Invoke();
+        => OnPauseGame?.Invoke();
 
         public static void ClearAllEvents()
         {
@@ -28,7 +28,7 @@ public static class MyEventSystem
                 OnCellChecked = null;
                 OnStartGame = null;
                 OnSetFlags = null;
-                onPauseGame = null;
+                OnPauseGame = null;
         }
 
 }

@@ -8,9 +8,9 @@ public class MineGroundCollection : MonoBehaviour
     [SerializeField] private int rows;
     [SerializeField] private int columns;
 
-    [Header("Dificuldade (0.1 = 10%, 0.2 = 20%)")]
+    [Space, Tooltip("Dificuldade (0.1 = 10%, 0.2 = 20%). OBS: Apesar de ser visualizado, atualmente é ajustado pelo GameManager.")]    
     [Range(0.1f, 0.25f)] // Limita o slider no Inspector para não quebrar o jogo
-    private float difficultyRatio = 0.15f;
+    [SerializeField]private float difficultyRatio = 0.15f; // Atualmente é definido pelo GameManager, porém pode ser ajustado aqui para testes rápidos
     private int mineCount;
     private int safeMineCount;
 
