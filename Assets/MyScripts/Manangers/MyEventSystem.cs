@@ -21,7 +21,7 @@ public static class MyEventSystem
         public static void RaisePauseGame()
         => onPauseGame?.Invoke();
 
-        public static void ResetEvents()
+        public static void ClearAllEvents()
         {
                 OnGameOver = null;
                 OnGameWin = null;

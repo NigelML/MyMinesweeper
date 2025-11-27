@@ -8,75 +8,37 @@ public class GameManager : MonoBehaviour
     private float dificultyLevel;
     public float DificultyLevel => dificultyLevel;
     private int flagsAvailable;
-    public int FlagsAvailable { get { return flagsAvailable; } set { flagsAvailable = value; } }
-
-    [SerializeField] private GameObject WinPanel;
-    [SerializeField] private GameObject GameOverPanel;
-    [SerializeField] private GameObject StartPanel;
-    [SerializeField] private GameObject MineField;
-    [SerializeField] private GameObject infoPanel;
+    public int FlagsAvailable { get { return flagsAvailable; } set { flagsAvailable = value; } }    
 
     void Awake()
     {
         if (Instance == null)
         {
-            Instance = this;            
+            Instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
-        WinPanel.SetActive(false);
-        GameOverPanel.SetActive(false);
     }
     void OnEnable()
-    {
-        MyEventSystem.OnGameWin += OnGameWin;
-        MyEventSystem.OnGameOver += OnGameOver;    
-        MyEventSystem.OnStartGame += OnStartGame;
-        pauseGame = false;    
+    {       
+        pauseGame = false;
     }
 
     void OnDisable()
     {
-        MyEventSystem.OnGameWin -= OnGameWin;
-        MyEventSystem.OnGameOver -= OnGameOver;
-        MyEventSystem.OnStartGame -= OnStartGame;
-    }
-
-    private void OnGameWin()
-    {
-        OnPauseGame();
-        WinPanel.SetActive(true);
-        Debug.Log("You Win!");
-    }
-    private void OnGameOver()
-    {
-        OnPauseGame();
-        GameOverPanel.SetActive(true);
-        Debug.Log("Game Over!");
-    }
-
-    private void OnPauseGame()
-    {
-        MyEventSystem.RaisePauseGame();
-        pauseGame = !pauseGame;
+        MyEventSystem.ClearAllEvents();
     }
 
     public void SetDificultyLevel(float level)
     {
         dificultyLevel = level;
     }
-    public void OnStartGame()
-    {
-        StartPanel.SetActive(false);
-        MineField.SetActive(true);
-        infoPanel.SetActive(true);
-        pauseGame = false;
-    }
+
     public void RestartGame()
     {
-        MyEventSystem.ResetEvents();
+        MyEventSystem.ClearAllEvents();
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 }
