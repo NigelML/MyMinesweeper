@@ -3,51 +3,71 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Tooltip("Reference to Start Panel")]
     [SerializeField] private GameObject StartPanel;
+    [Tooltip("Reference to Info Panel")]
     [SerializeField] private GameObject infoPanel;
+    [Tooltip("Reference to Win Panel")]
     [SerializeField] private GameObject WinPanel;
+    [Tooltip("Reference to Game Over Panel")]
     [SerializeField] private GameObject GameOverPanel;
+    [Tooltip("Reference to Mine Field")]
     [SerializeField] private GameObject MineField;
 
 
     void OnEnable()
     {
         DisablePanels();
-        MyEventSystem.OnGameWin += OnGameWin;
-        MyEventSystem.OnGameOver += OnGameOver;
-        MyEventSystem.OnStartGame += OnStartGame;
+        MyEventSystem.OnGameWin += HandleGameWin;
+        MyEventSystem.OnGameOver += HandleGameOver;
+        MyEventSystem.OnStartGame += HandleStartGame;
     }
     void OnDisable()
     {
-        MyEventSystem.OnGameWin -= OnGameWin;
-        MyEventSystem.OnGameOver -= OnGameOver;
-        MyEventSystem.OnStartGame -= OnStartGame;
+        MyEventSystem.OnGameWin -= HandleGameWin;
+        MyEventSystem.OnGameOver -= HandleGameOver;
+        MyEventSystem.OnStartGame -= HandleStartGame;
     }
 
     void Start()
     {
         StartPanel.SetActive(true);
     }
-    private void OnGameWin()
+    /// <summary>
+    /// Handles the game win event
+    /// </summary>
+    private void HandleGameWin()
     {
-        OnPauseGame();
+        PauseGame();
         WinPanel.SetActive(true);
     }
-    private void OnGameOver()
+    /// <summary>
+    /// Handles the game over event
+    /// </summary>
+    private void HandleGameOver()
     {
-        OnPauseGame();
+        PauseGame();
         GameOverPanel.SetActive(true);
     }
-    private void OnPauseGame()
+    /// <summary>
+    /// Inveke the pause game event
+    /// </summary>
+    private void PauseGame()
     {
         MyEventSystem.RaisePauseGame();
     }
-    public void OnStartGame()
+    /// <summary>
+    /// Handles the start game event
+    /// </summary>
+    public void HandleStartGame()
     {
         StartPanel.SetActive(false);
         infoPanel.SetActive(true);
         MineField.SetActive(true);
     }
+    /// <summary>
+    /// Disable all UI panels except the StartPanel.
+    /// </summary>
     private void DisablePanels()
     {
         if (infoPanel.activeSelf)

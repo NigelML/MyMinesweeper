@@ -17,8 +17,10 @@ public class ShowFlags : MonoBehaviour
     {
         UpdateFlagsDisplay();
     }
-
-    public void UpdateFlagsDisplay()
+    /// <summary>
+    /// Updates the flags display in the UI
+    /// </summary>
+    private void UpdateFlagsDisplay()
     {
         int flags = GameManager.Instance.FlagsAvailable;       
         FlagsText.text = $"{flags:00}";

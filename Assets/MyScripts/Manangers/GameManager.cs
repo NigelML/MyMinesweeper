@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     private int flagsAvailable;
     public int FlagsAvailable { get { return flagsAvailable; } set { flagsAvailable = value; } }
 
+    [Tooltip("Reference to UI Manager")]
     [SerializeField] private UIManager uiManager;
+    [Tooltip("Reference to Grid Tilemap")]
     [SerializeField] private GameObject Grid_Tilemap;
 
     void Awake()
@@ -27,8 +29,8 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         pauseGame = false;
-        MyEventSystem.OnPauseGame += OnPauseGame;
-        MyEventSystem.OnStartGame += OnStartGame;
+        MyEventSystem.OnPauseGame += HandlePauseGame;
+        MyEventSystem.OnStartGame += HandleStartGame;
         uiManager.gameObject.SetActive(true);
     }
 
@@ -37,20 +39,27 @@ public class GameManager : MonoBehaviour
         MyEventSystem.ClearAllEvents();
     }
     
-    private void OnStartGame()
+    private void HandleStartGame()
     {
         Grid_Tilemap.SetActive(true);
     }
-    private void OnPauseGame()
+    private void HandlePauseGame()
     {
         pauseGame = !pauseGame;
     }
 
+    /// <summary>
+    /// Set the dificulty level of the game
+    /// </summary>
+    /// <param name="level"></param>
     public void SetDificultyLevel(float level)
     {
         dificultyLevel = level;
     }
 
+    /// <summary>
+    /// Restart game by reloading the current scene
+    /// </summary>
     public void RestartGame()
     {
         MyEventSystem.ClearAllEvents();

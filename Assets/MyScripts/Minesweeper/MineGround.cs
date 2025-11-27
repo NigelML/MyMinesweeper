@@ -6,10 +6,13 @@ using UnityEngine.EventSystems;
 
 public class MineGround : MonoBehaviour, IPointerClickHandler
 {
+    [Tooltip("Image to show mine or flag status")]
     [SerializeField] private Image statusImage;
+    [Tooltip("Text to show amount of mines around")]
     [SerializeField] private TextMeshProUGUI amountText;
+    [Tooltip("List of sister cells around this cell. It is automatically populated, the preview is for testing purposes only.")]
     [SerializeField] private List<MineGround> sisterCellsList = new List<MineGround>();
-    
+
     private Image cellImage;
     private Button button;
 
@@ -22,6 +25,10 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
     private bool isFlagged;
     public bool IsFlagged => isFlagged;
 
+    /// <summary>
+    /// Configure the sister cells around this cell
+    /// </summary>
+    /// <param name="cells"></param>
     public void ConfigureSisterCells(List<MineGround> cells)
     {
         sisterCellsList = cells;
@@ -34,18 +41,20 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         cellImage = GetComponent<Image>();
-        button = GetComponent<Button>();      
+        button = GetComponent<Button>();
     }
 
-    // Método principal chamado pelo clique
-    public void ActiveCell()
+    /// <summary>
+    /// Main method called by click
+    /// </summary>
+    private void ActiveCell()
     {
         if (GameManager.Instance.PauseGame) return;
-        // 1. Condição de Parada (Base Case)
-        // Se já foi checada ou marcada com bandeira, não faz nada
+        //Stop Condition (Base Case)
+        //If it has already been checked or flagged, do nothing.
         if (cellChecked || isFlagged) return;
 
-        // 2. Marca como visitada e atualiza visual
+        // Mark as visited and update visuals.
         cellChecked = true;
         cellImage.enabled = false;
         button.enabled = false;
@@ -57,20 +66,20 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
             return;
         }
         else
-        {     
+        {
             MyEventSystem.RaiseCellChecked();
             int minesAround = CountMinesAround();
 
             if (minesAround > 0)
             {
-                // Se tiver minas perto, mostra o número e PARA.                
+                // If there are mines nearby, it shows the number and STOPS.                
                 amountText.text = minesAround.ToString();
                 amountText.gameObject.SetActive(true);
             }
             else
             {
-                // 4. FLOOD FILL (Recursão)
-                // Só entramos aqui se NÃO houver minas ao redor (buraco vazio)
+                // 4. FLOOD FILL (Recursion)
+                // We're only here if there are NO mines around (empty hole).
                 foreach (MineGround sister in sisterCellsList)
                 {
                     sister.ActiveCell();
@@ -79,7 +88,10 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    // Método auxiliar APENAS para contar minas ao redor
+    /// <summary>
+    /// Count the amount of mines in the vicinity
+    /// </summary>
+    /// <returns></returns>
     private int CountMinesAround()
     {
         int count = 0;
@@ -92,7 +104,9 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
         }
         return count;
     }
-
+    /// <summary>
+    /// Reveals the mine graphic on this cell
+    /// </summary>
     public void RevealMine()
     {
         if (haveMine)
@@ -101,8 +115,10 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
             statusImage.gameObject.SetActive(true);
         }
     }
-
-    public void ToggleFlag()
+    /// <summary>
+    /// Toggles a flag on this cell
+    /// </summary>
+    private void ToggleFlag()
     {
         if (GameManager.Instance.PauseGame) return;
         if (cellChecked) return;
@@ -112,26 +128,30 @@ public class MineGround : MonoBehaviour, IPointerClickHandler
         if (isFlagged)
         {
             statusImage.sprite = Resources.Load<Sprite>("Flag_A");
-            statusImage.gameObject.SetActive(true); 
-            f = -1;          
+            statusImage.gameObject.SetActive(true);
+            f = -1;
         }
         else
         {
-            statusImage.gameObject.SetActive(false); 
-            f = 1;          
+            statusImage.gameObject.SetActive(false);
+            f = 1;
         }
         GameManager.Instance.FlagsAvailable += f;
         MyEventSystem.RaiseSetFlags();
     }
+    /// <summary>
+    /// Handle pointer click events
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
-    {       
+    {
         Debug.Log("Clicou em: " + gameObject.name);
         if (eventData.button == PointerEventData.InputButton.Left)
-        {            
-            if (IsFlagged) return; 
+        {
+            if (IsFlagged) return;
 
-            ActiveCell(); 
-        }       
+            ActiveCell();
+        }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             ToggleFlag();
